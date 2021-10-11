@@ -1,4 +1,5 @@
 import logging
+from pprint import pprint
 
 from flask_restplus import Resource, fields, marshal
 from api.serializers import deck_serializers
@@ -73,3 +74,18 @@ class Deck(Resource):
             )
         else:
             return {}, 404
+
+    @ns.response(200, "Success", deck_serializers.deck_fields_obj)
+    def patch(self, deck_id):
+
+        """
+        Edit a single Station Category
+        """
+        deck_service = DeckService()
+        deck = deck_service.get_deck_or_raise(deck_id)
+        result, code = deck_service.update_deck(deck, api.payload)
+
+        if code == 200:
+            return (marshal(result, deck_serializers.deck_fields_obj), code)
+        else:
+            return result, code
