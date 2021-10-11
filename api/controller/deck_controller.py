@@ -16,9 +16,20 @@ log = logging.getLogger(__name__)
 @ns.route("/")
 @ns.route("", doc=False)  # makes '/' optional
 class DeckList(Resource):
+    @ns.response(200, "Success", deck_serializers.deck_list_fields)
+    def get(self):
+        deck = DeckService()
+        result = deck.get_decks()
+        return (
+            marshal(
+                {"data": result},
+                deck_serializers.deck_list_fields,
+            ),
+            200,
+        )
 
     post_args = api.model(
-        "StationCategoryPostArgs",
+        "DeckPostArgs",
         {
             "name": fields.String(
                 min_length=1, required=True, example="The name of the deck"

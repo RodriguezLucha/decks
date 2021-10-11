@@ -24,3 +24,8 @@ class DeckService:
 
         station_category = db.session.query(Deck).filter_by(deck_id=deck_id).first()
         return station_category
+
+    def get_decks(self):
+
+        station_category = db.session.query(Deck).all()
+        return station_category

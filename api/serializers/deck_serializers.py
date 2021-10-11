@@ -9,3 +9,7 @@ deck_fields_obj = api.model(
         "name": fields.String(example="The name of the deck"),
     },
 )
+deck_list_fields = api.model(
+    "DeckList",
+    {"data": fields.List(fields.Nested(deck_fields_obj))},
+)

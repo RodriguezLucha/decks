@@ -1,7 +1,7 @@
 from pprint import pprint
 
 
-def test_create_deck_successful(client):
+def test_create_deck_successful(clear_tables, client):
     res = client.post("/decks", json={"name": "test"})
     assert res.status_code == 201
     assert res.json["name"] == "test"
