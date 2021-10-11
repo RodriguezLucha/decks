@@ -1,3 +1,4 @@
+from pprint import pprint
 import pytest
 import time
 import subprocess
@@ -37,6 +38,23 @@ def existing_deck_id(client):
         json={"name": "name"},
     )
     assert res.status_code == 201
+    deck_id = res.json["id"]
+    yield deck_id
+
+
+@pytest.fixture
+def existing_card_id(client, existing_deck_id):
+    res = client.post(
+        f"/decks/{existing_deck_id}/cards",
+        json={
+            "name": "name",
+            "num": 1,
+            "front_svg": "front",
+            "back_svg": "back",
+            "hidden": False,
+        },
+    )
+    assert res.status_code == 201, res.json
     deck_id = res.json["id"]
     yield deck_id
 

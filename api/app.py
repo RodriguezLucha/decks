@@ -8,7 +8,7 @@ import werkzeug
 werkzeug.cached_property = werkzeug.utils.cached_property
 from api.restplus import api  # noqa: E402
 
-from api.controller import deck_controller  # noqa: E402
+from api.controller import deck_controller, card_controller  # noqa: E402
 
 logging.basicConfig(level=logging.INFO)
 
@@ -32,7 +32,10 @@ api.init_app(blueprint)
 
 
 api.add_namespace(deck_controller.ns)
+api.add_namespace(card_controller.ns)
 app.register_blueprint(blueprint)
 
 db.init_app(app)
 migrate.init_app(app, db)
+
+# print(app.url_map)
