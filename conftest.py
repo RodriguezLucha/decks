@@ -30,6 +30,17 @@ def clear_tables(db_session):
     db_session.commit()
 
 
+@pytest.fixture
+def existing_deck_id(client):
+    res = client.post(
+        "/decks",
+        json={"name": "name"},
+    )
+    assert res.status_code == 201
+    deck_id = res.json["id"]
+    yield deck_id
+
+
 def run_cmd(cmd):
     return subprocess.check_output(
         cmd, stderr=subprocess.STDOUT, universal_newlines=True, shell=True

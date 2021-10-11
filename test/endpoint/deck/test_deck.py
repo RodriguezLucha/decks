@@ -1,37 +1,25 @@
-from pprint import pprint
+def test_create_deck_successful(existing_deck_id):
+    assert existing_deck_id
 
 
-def test_create_deck_successful(clear_tables, client):
-    res = client.post("/decks", json={"name": "test"})
-    assert res.status_code == 201
-    assert res.json["name"] == "test"
-    assert "id" in res.json
-
-
-def test_read_single(client):
-    res = client.post("/decks", json={"name": "test"})
-    assert res.status_code == 201
-    assert res.json["name"] == "test"
-    id = res.json["id"]
-
-    res = client.get(f"/decks/{id}")
+def test_read_single(client, existing_deck_id):
+    res = client.get(f"/decks/{existing_deck_id}")
     assert res.status_code == 200, res.json
 
 
-def test_read_all(client):
-    res = client.post("/decks", json={"name": "test"})
-    assert res.status_code == 201
-    assert res.json["name"] == "test"
+def test_read_all(client, existing_deck_id):
     res = client.get(f"/decks")
     assert res.status_code == 200, res.json
 
 
-def test_update_deck(client):
-    res = client.post("/decks", json={"name": "test"})
-    assert res.status_code == 201
-    assert res.json["name"] == "test"
-    id = res.json["id"]
+def test_update_deck(client, existing_deck_id):
 
-    res = client.patch(f"/decks/{id}", json={"name": "updated_name"})
+    res = client.patch(f"/decks/{existing_deck_id}", json={"name": "updated_name"})
     assert res.status_code == 200, res.json
     assert res.json["name"] == "updated_name"
+
+
+def test_delete_deck(client, existing_deck_id):
+
+    res = client.delete(f"/decks/{existing_deck_id}")
+    assert res.status_code == 200, res.json

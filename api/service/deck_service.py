@@ -49,3 +49,11 @@ class DeckService:
 
         station_category = db.session.query(Deck).all()
         return station_category
+
+    def delete_deck(self, deck):
+        try:
+            db.session.delete(deck)
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
+        return deck, 200

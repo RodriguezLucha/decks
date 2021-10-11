@@ -78,12 +78,21 @@ class Deck(Resource):
     @ns.response(200, "Success", deck_serializers.deck_fields_obj)
     def patch(self, deck_id):
 
-        """
-        Edit a single Station Category
-        """
         deck_service = DeckService()
         deck = deck_service.get_deck_or_raise(deck_id)
         result, code = deck_service.update_deck(deck, api.payload)
+
+        if code == 200:
+            return (marshal(result, deck_serializers.deck_fields_obj), code)
+        else:
+            return result, code
+
+    @ns.response(200, "Success", deck_serializers.deck_fields_obj)
+    def delete(self, deck_id):
+
+        deck_service = DeckService()
+        deck = deck_service.get_deck_or_raise(deck_id)
+        result, code = deck_service.delete_deck(deck)
 
         if code == 200:
             return (marshal(result, deck_serializers.deck_fields_obj), code)
