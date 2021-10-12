@@ -18,9 +18,9 @@ log = logging.getLogger(__name__)
 @ns.route("", doc=False)  # makes '/' optional
 class CardList(Resource):
     @ns.response(200, "Success", card_serializers.card_list_fields)
-    def get(self):
+    def get(self, deck_id):
         card = CardService()
-        result = card.get_cards()
+        result = card.get_cards(deck_id)
         return (
             marshal(
                 {"data": result},
@@ -62,7 +62,7 @@ class CardList(Resource):
 @ns.param("card_id", "the card id")
 class Card(Resource):
     @ns.response(200, "Success", card_serializers.card_fields_obj)
-    def get(self, card_id):
+    def get(self, deck_id, card_id):
 
         card_service = CardService()
         card = card_service.get_card(card_id)
@@ -78,7 +78,7 @@ class Card(Resource):
             return {}, 404
 
     @ns.response(200, "Success", card_serializers.card_fields_obj)
-    def patch(self, card_id):
+    def patch(self, deck_id, card_id):
 
         card_service = CardService()
         card = card_service.get_card_or_raise(card_id)
@@ -90,7 +90,7 @@ class Card(Resource):
             return result, code
 
     @ns.response(200, "Success", card_serializers.card_fields_obj)
-    def delete(self, card_id):
+    def delete(self, deck_id, card_id):
 
         card_service = CardService()
         card = card_service.get_card_or_raise(card_id)

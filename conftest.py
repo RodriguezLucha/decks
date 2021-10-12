@@ -55,8 +55,8 @@ def existing_card_id(client, existing_deck_id):
         },
     )
     assert res.status_code == 201, res.json
-    deck_id = res.json["id"]
-    yield deck_id
+    card_id = res.json["id"]
+    yield existing_deck_id, card_id
 
 
 def run_cmd(cmd):

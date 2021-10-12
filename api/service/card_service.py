@@ -46,10 +46,10 @@ class CardService:
 
         return card, 200
 
-    def get_cards(self):
+    def get_cards(self, deck_id):
 
-        station_category = db.session.query(Card).all()
-        return station_category
+        cards = db.session.query(Card).filter_by(deck_id=deck_id).all()
+        return cards
 
     def delete_card(self, card):
         try:
