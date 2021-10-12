@@ -7,6 +7,7 @@ from api.serializers import card_serializers
 from api.service.card_service import CardService
 
 from api.restplus import api
+from werkzeug.datastructures import FileStorage
 
 
 ns = api.namespace(name="Cards", path="/decks/<int:deck_id>/cards")
@@ -89,6 +90,26 @@ class Card(Resource):
         else:
             return result, code
 
+    upload_parser = api.parser()
+    upload_parser.add_argument(
+        "file", location="files", type=FileStorage, required=True
+    )
+
+    @api.expect(upload_parser)
+    def post(self, deck_id, card_id):
+
+        args = self.upload_parser.parse_args()
+
+        card_service = CardService()
+        card = card_service.get_card_or_raise(card_id)
+
+        result, code = card_service.upload_file(card, args["file"])
+
+        if code == 201:
+            return (marshal(result, card_serializers.card_fields_obj), code)
+        else:
+            return result, code
+
     @ns.response(200, "Success", card_serializers.card_fields_obj)
     def delete(self, deck_id, card_id):
 
@@ -100,3 +121,15 @@ class Card(Resource):
             return (marshal(result, card_serializers.card_fields_obj), code)
         else:
             return result, code
+
+
+@ns.route("/<int:card_id>/file")
+@ns.param("card_id", "the card id")
+class CardDownload(Resource):
+    def get(self, deck_id, card_id):
+
+        card_service = CardService()
+        card = card_service.get_card_or_raise(card_id)
+
+        result = card_service.download_file(card)
+        return result
