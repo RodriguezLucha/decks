@@ -39,3 +39,9 @@ db.init_app(app)
 migrate.init_app(app, db)
 
 # print(app.url_map)
+
+
+@app.after_request
+def after_request(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
