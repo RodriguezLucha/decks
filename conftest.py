@@ -1,4 +1,3 @@
-from pprint import pprint
 import pytest
 import time
 import subprocess

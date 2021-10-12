@@ -1,6 +1,4 @@
 import logging
-import uuid
-from pprint import pprint
 from api.database import db
 from api.models import Card
 from flask import send_file

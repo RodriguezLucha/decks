@@ -8,7 +8,7 @@ def test_read_single(client, existing_deck_id):
 
 
 def test_read_all(client, existing_deck_id):
-    res = client.get(f"/decks")
+    res = client.get("/decks")
     assert res.status_code == 200, res.json
 
 

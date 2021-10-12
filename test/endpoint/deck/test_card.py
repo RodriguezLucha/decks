@@ -1,7 +1,6 @@
 from filehash import FileHash
 import os
 import io
-from pprint import pprint
 
 
 def test_create_card_successful(client, existing_card_id):

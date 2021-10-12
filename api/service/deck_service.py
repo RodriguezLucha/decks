@@ -1,5 +1,4 @@
 import logging
-from pprint import pprint
 from api.database import db
 from api.models import Deck
 

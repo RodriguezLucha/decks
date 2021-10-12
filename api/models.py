@@ -1,5 +1,3 @@
-from sqlalchemy.orm.relationships import foreign
-from sqlalchemy.sql.schema import UniqueConstraint
 from api.database import db
 from sqlalchemy import (
     Boolean,
@@ -9,7 +7,6 @@ from sqlalchemy import (
     Integer,
     LargeBinary,
     Text,
-    text,
 )
 from sqlalchemy.orm import relationship
 

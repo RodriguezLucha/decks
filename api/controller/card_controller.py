@@ -1,5 +1,4 @@
 import logging
-from pprint import pprint
 
 from flask_restplus import Resource, fields, marshal
 from api.serializers import card_serializers
