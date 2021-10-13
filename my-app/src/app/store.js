@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import deck from '../features/deck/deckSlice'
+import card from '../features/card/cardSlice'
 import throttle from 'lodash/throttle'
 
 export const loadState = () => {
@@ -25,7 +26,8 @@ const persistedStore = loadState()
 
 let store = configureStore({
   reducer: {
-    deck
+    deck,
+    card
   },
   preloadedState: persistedStore
 })

@@ -25,8 +25,8 @@ def db_session():
 
 @pytest.fixture
 def clear_tables(db_session):
-    db_session.query(Card).delete()
-    db_session.query(Deck).delete()
+    # db_session.query(Card).delete()
+    # db_session.query(Deck).delete()
     db_session.commit()
 
 
