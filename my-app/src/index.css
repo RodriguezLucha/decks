@@ -1,0 +1,24 @@
+.card {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 1em;
+  width: 75%;
+  height: 50vh;
+  margin: 3em;
+}
+.hiddenCard {
+  border: 1px solid blue;
+  border-radius: 5px;
+  padding: 3em;
+  width: 25%;
+  margin: 1em;
+}
+
+.cardHolder {
+  display: flex;
+}
+
+button {
+  /* padding: 30px; */
+  margin: 20px;
+}

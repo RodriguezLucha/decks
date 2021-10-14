@@ -12,6 +12,7 @@ from werkzeug.datastructures import FileStorage
 ns = api.namespace(name="Cards", path="/decks/<int:deck_id>/cards")
 
 log = logging.getLogger(__name__)
+log.info("Start.")
 
 
 @ns.route("/")
@@ -77,8 +78,21 @@ class Card(Resource):
         else:
             return {}, 404
 
+    patch_args = api.model(
+        "CardPostArgs",
+        {
+            "back_svg": fields.String(min_length=1),
+            "front_svg": fields.String(min_length=1),
+            "hidden": fields.Boolean(),
+            "name": fields.String(min_length=1),
+            "num": fields.Integer(min_length=1),
+        },
+    )
+
+    @ns.expect(patch_args)
     @ns.response(200, "Success", card_serializers.card_fields_obj)
     def patch(self, deck_id, card_id):
+        log.error(deck_id)
 
         card_service = CardService()
         card = card_service.get_card_or_raise(card_id)

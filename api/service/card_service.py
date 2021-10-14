@@ -36,6 +36,9 @@ class CardService:
 
     def update_card(self, card, body):
 
+        log.info(card)
+        log.info(body)
+
         for key, value in body.items():
             setattr(card, key, value)
 

@@ -11,7 +11,7 @@ import { deckSchema } from '../../schema.js'
 export const fetchDecks = createAsyncThunk(
   'deck/fetchDecks',
   async thunkApi => {
-    const response = await fetch(`http://localhost:5000/decks/`)
+    const response = await fetch(`decks/`)
     const data = await response.json()
     const normalized = normalize(data, { data: [deckSchema] })
     return { entities: normalized.entities }
