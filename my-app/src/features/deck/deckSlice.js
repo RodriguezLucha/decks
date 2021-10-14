@@ -3,8 +3,6 @@ import {
   createAsyncThunk,
   createEntityAdapter
 } from '@reduxjs/toolkit'
-import { v1 as uuid } from 'uuid'
-import _ from 'lodash'
 import { normalize } from 'normalizr'
 import { deckSchema } from '../../schema.js'
 

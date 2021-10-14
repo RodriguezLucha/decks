@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {} from './deckSlice'
-import { Link } from 'react-router-dom'
 import { fetchDecks, selectAllDecks } from './deckSlice'
 
 export function Deck () {
@@ -9,7 +8,7 @@ export function Deck () {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchDecks())
-  }, [])
+  }, [dispatch])
   console.log(decks)
 
   return (

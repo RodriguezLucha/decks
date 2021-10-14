@@ -1,32 +1,67 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {} from './cardSlice'
-import { Link } from 'react-router-dom'
-import { fetchCardsById, toggleCardById, selectAllCards } from './cardSlice'
-import { useParams, useHistory } from 'react-router-dom'
+import {
+  fetchCardsById,
+  toggleCardById,
+  selectAllCards,
+  selectCardEntities,
+  selectCardIds
+} from './cardSlice'
+import { useParams } from 'react-router-dom'
 
 export function Card () {
   const cards = useSelector(selectAllCards)
+  const cardEntities = useSelector(selectCardEntities)
+
+  console.log(cardEntities)
+
   const dispatch = useDispatch()
   let { id } = useParams()
+  const stringifiedCards = JSON.stringify(cards)
+
+  const [shownIds, setShownIds] = useState(
+    cards.filter(c => !c.hidden).map(c => c.id)
+  )
+  const [hiddenIds, setHiddenIds] = useState(
+    cards.filter(c => c.hidden).map(c => c.id)
+  )
+
+  function updateStates (cards) {
+    setShownIds(cards.filter(c => !c.hidden).map(c => c.id))
+    setHiddenIds(cards.filter(d => d.hidden).map(d => d.id))
+  }
+
+  function advanceShownCard () {
+    let copy = [...shownIds]
+    let first = copy.shift()
+    copy.push(first)
+    setShownIds(copy)
+  }
+  function advanceHiddenCard () {
+    let copy = [...hiddenIds]
+    let first = copy.shift()
+    copy.push(first)
+    setHiddenIds(copy)
+  }
+
   useEffect(() => {
-    dispatch(fetchCardsById(id))
-  }, [JSON.stringify(cards)])
+    dispatch(fetchCardsById(id)).then(() => updateStates(cards))
+  }, [stringifiedCards])
 
   const [showFront, flipCard] = useState(true)
   const [showHiddenFront, flipHiddenCard] = useState(true)
 
-  let shownCards = cards.filter(c => !c.hidden)
-  let hiddenCards = cards.filter(c => c.hidden)
-
   let card = null
   let hiddenCard = null
 
-  if (shownCards) {
-    card = shownCards[0]
+  if (shownIds) {
+    let cardList = shownIds.map(id => cardEntities[id])
+    card = cardList[0]
   }
-  if (hiddenCards) {
-    hiddenCard = hiddenCards[0]
+  if (hiddenIds) {
+    let cardList = hiddenIds.map(id => cardEntities[id])
+    hiddenCard = cardList[0]
   }
 
   function frontOfCard (card) {
@@ -59,6 +94,7 @@ export function Card () {
     <div className='cardHolder'>
       <div className='card'>
         <button onClick={() => flipCard(!showFront)}>Flip</button>
+        <button onClick={() => advanceShownCard()}>Next</button>
         <button onClick={() => dispatch(toggleCardById(card))}>Toggle</button>
 
         {showFront ? frontOfCard(card) : backOfCard(card)}
@@ -66,6 +102,7 @@ export function Card () {
       </div>
       <div className='hiddenCard'>
         <button onClick={() => flipHiddenCard(!showHiddenFront)}>Flip</button>
+        <button onClick={() => advanceHiddenCard()}>Next</button>
         <button onClick={() => dispatch(toggleCardById(hiddenCard))}>
           Toggle
         </button>

@@ -1,13 +1,7 @@
 import React from 'react'
 import { Deck } from './features/deck/Deck'
 import { Card } from './features/card/Card'
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  NavLink,
-  Redirect
-} from 'react-router-dom'
+import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom'
 
 function App () {
   return (
