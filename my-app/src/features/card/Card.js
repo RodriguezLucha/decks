@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux'
 import {} from './cardSlice'
 import {
@@ -32,6 +33,11 @@ export function Card () {
     setHiddenIds(cards.filter(d => d.hidden).map(d => d.id))
   }
 
+  function shuffleShownCard () {
+    let copy = [...shownIds]
+    copy = _.shuffle(copy)
+    setShownIds(copy)
+  }
   function advanceShownCard () {
     let copy = [...shownIds]
     let first = copy.shift()
@@ -95,6 +101,7 @@ export function Card () {
       <div className='card'>
         <button onClick={() => flipCard(!showFront)}>Flip</button>
         <button onClick={() => advanceShownCard()}>Next</button>
+        <button onClick={() => shuffleShownCard()}>Shuffle</button>
         <button onClick={() => dispatch(toggleCardById(card))}>Toggle</button>
 
         {showFront ? frontOfCard(card) : backOfCard(card)}
