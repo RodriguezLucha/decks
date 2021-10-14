@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import _ from 'lodash';
+import _ from 'lodash'
 import { useSelector, useDispatch } from 'react-redux'
 import {} from './cardSlice'
 import {
@@ -15,8 +15,6 @@ export function Card () {
   const cards = useSelector(selectAllCards)
   const cardEntities = useSelector(selectCardEntities)
 
-  console.log(cardEntities)
-
   const dispatch = useDispatch()
   let { id } = useParams()
   const stringifiedCards = JSON.stringify(cards)
@@ -29,8 +27,9 @@ export function Card () {
   )
 
   function updateStates (cards) {
-    setShownIds(cards.filter(c => !c.hidden).map(c => c.id))
-    setHiddenIds(cards.filter(d => d.hidden).map(d => d.id))
+    const shown_ids = cards.filter(c => !c.hidden).map(g => g.id)
+    setShownIds(shown_ids)
+    setHiddenIds(cards.filter(d => d.hidden).map(f => f.id))
   }
 
   function shuffleShownCard () {

@@ -9,7 +9,6 @@ export function Deck () {
   useEffect(() => {
     dispatch(fetchDecks())
   }, [dispatch])
-  console.log(decks)
 
   return (
     <div>

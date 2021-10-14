@@ -48,7 +48,7 @@ export const cardSlice = createSlice({
       cardAdapter.upsertMany(state, action.payload.entities.card)
     },
     [toggleCardById.fulfilled]: (state, action) => {
-      cardAdapter.upsertOne(state, action.payload.entities.card)
+      cardAdapter.upsertMany(state, action.payload.entities.card)
     }
   }
 })
