@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import _ from 'lodash'
 import { useSelector, useDispatch } from 'react-redux'
 import {} from './cardSlice'
@@ -12,6 +12,8 @@ import {
 import { useParams } from 'react-router-dom'
 
 export function Card () {
+  const audioRef = useRef()
+
   const cards = useSelector(selectAllCards)
   const cardEntities = useSelector(selectCardEntities)
 
@@ -42,12 +44,16 @@ export function Card () {
     let first = copy.shift()
     copy.push(first)
     setShownIds(copy)
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current.load()
+      audioRef.current.play()
+    }
   }
   function advanceHiddenCard () {
     let copy = [...hiddenIds]
     let first = copy.shift()
     copy.push(first)
-    setHiddenIds(copy)
   }
 
   useEffect(() => {
@@ -71,20 +77,20 @@ export function Card () {
 
   function frontOfCard (card) {
     if (card) {
-      return <div dangerouslySetInnerHTML={{ __html: card.front_svg }} />
+      return <div dangerouslySetInnerHTML={{ __html: card.front_text }} />
     }
     return null
   }
   function backOfCard (card) {
     if (card) {
-      return <div dangerouslySetInnerHTML={{ __html: card.back_svg }} />
+      return <div dangerouslySetInnerHTML={{ __html: card.back_text }} />
     }
     return null
   }
   function audioClip (card) {
     if (card) {
       return (
-        <audio controls>
+        <audio controls ref={audioRef}>
           <source
             src={`http://localhost:5000/decks/${card.deck_id}/cards/${card.id}/file`}
             type='audio/mpeg'
