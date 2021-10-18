@@ -72,3 +72,4 @@ target/
 .env
 _.env
 test_result.xml
+seed.py
