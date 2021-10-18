@@ -14,7 +14,6 @@ from api.controller import deck_controller, card_controller  # noqa: E402
 logging.basicConfig(level=logging.INFO)
 
 log = logging.getLogger(__name__)
-log.info("Start.")
 
 app = Flask(__name__)
 CORS(app)

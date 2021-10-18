@@ -32,10 +32,13 @@ class Card(db.Model):
         Integer,
         primary_key=True,
     )
-    deck_id = Column(ForeignKey("deck.deck_id", ondelete="RESTRICT"), nullable=False)
     back_audio = Column(LargeBinary)
     back_svg = Column(Text)
+    back_text = Column(Text)
+    category = Column(Text)
+    deck_id = Column(ForeignKey("deck.deck_id", ondelete="RESTRICT"), nullable=False)
     front_svg = Column(Text)
+    front_text = Column(Text)
     hidden = Column(Boolean, default=False)
     last_practice_date = Column(DateTime)
     modified_date = Column(DateTime)

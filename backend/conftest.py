@@ -25,8 +25,8 @@ def db_session():
 
 @pytest.fixture
 def clear_tables(db_session):
-    # db_session.query(Card).delete()
-    # db_session.query(Deck).delete()
+    db_session.query(Card).delete()
+    db_session.query(Deck).delete()
     db_session.commit()
 
 
@@ -50,6 +50,9 @@ def existing_card_id(client, existing_deck_id):
             "num": 1,
             "front_svg": "front",
             "back_svg": "back",
+            "front_text": "front",
+            "back_text": "back",
+            "category": "category",
             "hidden": False,
         },
     )

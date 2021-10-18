@@ -11,6 +11,16 @@ def test_create_card_successful(client, existing_card_id):
 def test_read_single(client, existing_deck_id, existing_card_id):
     res = client.get(f"/decks/{existing_card_id[0]}/cards/{existing_card_id[1]}")
     assert res.status_code == 200, res.json
+    assert res.json["back_svg"]
+    assert res.json["back_text"]
+    assert res.json["category"]
+    assert res.json["deck_id"]
+    assert res.json["front_svg"]
+    assert res.json["front_text"]
+    assert not res.json["hidden"]
+    assert res.json["id"]
+    assert res.json["name"]
+    assert res.json["num"]
 
 
 def test_read_all(client, existing_card_id):
